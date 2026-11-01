@@ -57,12 +57,25 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Banner Quảng Cáo (Đã được cố định tỷ lệ h-64 object-cover) */}
+        {/* Banner Quảng Cáo (Giữ nguyên 100% ảnh, không cắt xén, khung đều nhau) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <img src="/images/banner1.png" alt="Banner 1" className="rounded-lg w-full h-64 object-cover shadow-sm border border-gray-200" />
-          <img src="/images/banner2.jpg" alt="Banner 2" className="rounded-lg w-full h-64 object-cover shadow-sm border border-gray-200" />
-          <img src="/images/banner3.png" alt="Banner 3" className="rounded-lg w-full h-64 object-cover shadow-sm border border-gray-200" />
-          <img src="/images/banner4.png" alt="Banner 4" className="rounded-lg w-full h-64 object-cover shadow-sm border border-gray-200" />
+          
+          <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
+            <img src="/images/banner1.png" alt="Banner 1" className="max-w-full max-h-full object-contain" />
+          </div>
+          
+          <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
+            <img src="/images/banner2.jpg" alt="Banner 2" className="max-w-full max-h-full object-contain" />
+          </div>
+          
+          <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
+            <img src="/images/banner3.png" alt="Banner 3" className="max-w-full max-h-full object-contain" />
+          </div>
+          
+          <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
+            <img src="/images/banner4.png" alt="Banner 4" className="max-w-full max-h-full object-contain" />
+          </div>
+
         </div>
       </main>
     </div>
