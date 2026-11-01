@@ -70,10 +70,7 @@ export default function Home() {
             <img src="/images/banner4.png" alt="Banner 3" className="max-w-full max-h-full object-contain" />
           </div>
           
-          {/* 3. Ảnh Bottom-Left (Lấy ảnh thứ 4 đưa lên) */}
-          <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
-            <img src="/images/banner3.png" alt="Banner 4" className="max-w-full max-h-full object-contain" />
-          </div>
+         
           
         
 
