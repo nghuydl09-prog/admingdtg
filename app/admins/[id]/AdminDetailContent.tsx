@@ -30,7 +30,7 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
 
     admin = adminData;
 
-    // 2. Lấy thông tin ngân hàng (Không dùng .single() để tránh lỗi nếu không có bank nào)
+    // 2. Lấy thông tin ngân hàng
     const { data: bankData } = await supabase
       .from("bank_accounts")
       .select("*")
@@ -129,8 +129,18 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
                 </div>
               </div>
 
-              {/* Nút Zalo (Chỉ hiện nếu có số) */}
-              <div className="w-full mt-6">
+              {/* NÚT LIÊN HỆ (CHECK MESS & ZALO) */}
+              <div className="w-full flex flex-col gap-2 mt-6">
+                {/* Nút Check Mess (Luôn hiển thị mặc định) */}
+                <a 
+                  href={facebookUrl || "#"} 
+                  target="_blank" 
+                  className="block w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition text-center"
+                >
+                  Check Mess
+                </a>
+
+                {/* Nút Zalo (Chỉ hiện nếu có số) */}
                 {hasZalo ? (
                   <a 
                     href={`https://zalo.me/${zaloPhone}`} 
