@@ -52,10 +52,9 @@ export default function Home() {
                 {/* 3. Banner Quảng Cáo (Lưới ảnh) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Thay tên file banner1.jpg bằng tên ảnh thật của bạn */}
-          <img src="/images/banner1.jpg" alt="Banner 1" className="rounded-lg w-full object-cover shadow-sm" />
+          <img src="/images/banner1.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow-sm" />
           <img src="/images/banner2.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow-sm" />
-          <img src="/images/banner3.jpg" alt="Banner 3" className="rounded-lg w-full object-cover shadow-sm" />
-          <img src="/images/banner4.jpg" alt="Banner 4" className="rounded-lg w-full object-cover shadow-sm" />
+          
         </div>
       </main>
     </div>
