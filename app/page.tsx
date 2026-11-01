@@ -7,12 +7,13 @@ export default function Home() {
       <header className="bg-white shadow-sm py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="font-bold text-xl text-red-600">ADMIN GDTG</div>
-          <nav className="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
-            <Link href="/admins" className="hover:text-red-600">Danh sách admin</Link>
-            <Link href="#" className="hover:text-red-600">Trung gian</Link>
-            <Link href="#" className="hover:text-red-600">Đăng ký admin</Link>
-            <Link href="#" className="hover:text-red-600">Scammer</Link>
-          </nav>
+      <nav className="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
+        <Link href="/" className="text-red-600">Trang chủ</Link>
+        <Link href="/admins" className="hover:text-red-600">Danh sách admin</Link>
+        <Link href="/" className="hover:text-red-600">Trung gian</Link>
+        <Link href="/" className="hover:text-red-600">Đăng ký admin</Link>
+        <Link href="/" className="hover:text-red-600">Scammer</Link>
+      </nav>
           <Link href="#" className="bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700">
             ⚠ Tố cáo
           </Link>
