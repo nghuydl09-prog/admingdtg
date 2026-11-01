@@ -65,10 +65,6 @@ export default function Home() {
           </div>
           
           <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
-            <img src="/images/banner2.jpg" alt="Banner 2" className="max-w-full max-h-full object-contain" />
-          </div>
-          
-          <div className="w-full h-64 bg-white rounded-lg border border-gray-200 shadow-sm flex items-center justify-center p-2 overflow-hidden">
             <img src="/images/banner3.png" alt="Banner 3" className="max-w-full max-h-full object-contain" />
           </div>
           
