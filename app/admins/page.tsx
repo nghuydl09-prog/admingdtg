@@ -63,7 +63,7 @@ export default function AdminsList() {
       {/* HEADER */}
       <header className="bg-white shadow-sm py-4 mb-0">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="font-bold text-xl text-red-600">TOP GDTG.VN</div>
+          <div className="font-bold text-xl text-red-600">ADMIN GDTG</div>
           <nav className="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
             <Link href="/admins" className="text-red-600">Danh sách admin</Link>
             <Link href="#" className="hover:text-red-600">Trung gian</Link>
