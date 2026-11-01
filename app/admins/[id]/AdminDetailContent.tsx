@@ -1,6 +1,10 @@
 import { supabase } from "../../lib/supabase";
+import { connection } from "next/server"; // BẮT BUỘC THÊM DÒNG NÀY
 
 export default async function AdminDetailContent({ params }: { params: Promise<{ id: string }> }) {
+  // Lệnh này báo cho Next.js 16 biết: Hãy đợi có người truy cập hẵng chạy, đừng build tĩnh!
+  await connection();
+
   let admin = null;
   let banks = [];
   let errorMsg = "";
@@ -16,7 +20,6 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
       .eq("id", adminId)
       .single();
 
-    // Nếu Supabase báo lỗi (VD: Không tìm thấy ID) thì ném lỗi ra ngoài
     if (adminError || !adminData) {
       throw new Error("Không tìm thấy Admin này trong hệ thống!");
     }
@@ -32,11 +35,10 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
     banks = bankData || [];
 
   } catch (error: any) {
-    // Nếu có BẤT KỲ LỖI NÀO xảy ra, gán thông báo lỗi để hiển thị
     errorMsg = error.message || "Đã xảy ra lỗi khi tải dữ liệu.";
   }
 
-  // NẾU CÓ LỖI -> HIỂN THỊ KHUNG THÔNG BÁO (Không bị văng web)
+  // NẾU CÓ LỖI -> HIỂN THỊ KHUNG THÔNG BÁO
   if (errorMsg || !admin) {
     return (
       <div className="p-10 flex items-center justify-center min-h-screen bg-gray-100">
@@ -57,11 +59,10 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
         
         <div className="flex flex-col md:flex-row gap-6">
           
-          {/* CỘT TRÁI: THÔNG TIN CÁ NHÂN */}
+          {/* CỘT TRÁI */}
           <div className="w-full md:w-1/3">
             <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center relative">
               
-              {/* Avatar */}
               <div className="w-32 h-32 relative mb-4">
                 <img 
                   src={admin.avatar_url || "https://picsum.photos/200"} 
@@ -70,7 +71,6 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
                 />
               </div>
 
-              {/* TÊN ADMIN VÀ TÍCH XANH NẰM NGANG NHAU */}
               <div className="flex items-center justify-center gap-2 mb-2">
                 <h2 className="text-2xl font-bold text-gray-900">{admin.name}</h2>
                 <svg className="w-6 h-6 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
@@ -78,12 +78,10 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
                 </svg>
               </div>
               
-              {/* CID */}
               <div className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold mb-6">
                 CID: {admin.id.split('-')[0].toUpperCase()}
               </div>
 
-              {/* Thông tin liên hệ cơ bản */}
               <div className="w-full space-y-3 text-sm">
                 <div className="flex border-b pb-2">
                   <span className="w-1/3 text-gray-500">Fanpage:</span>
@@ -108,7 +106,6 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
                 </div>
               </div>
 
-              {/* Nút Zalo (Chỉ hiện nếu có số) */}
               <div className="w-full mt-6">
                 {hasZalo ? (
                   <a 
@@ -128,7 +125,7 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
             </div>
           </div>
 
-          {/* CỘT PHẢI: GIỚI THIỆU & NGÂN HÀNG */}
+          {/* CỘT PHẢI */}
           <div className="w-full md:w-2/3">
             
             <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
