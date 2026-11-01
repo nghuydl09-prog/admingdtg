@@ -1,12 +1,10 @@
-import { connection } from 'next/server';
-import AddBankForm from './AddBankForm';
+import { Suspense } from "react";
+import AddBankPageContent from "./AddBankPageContent";
 
-export default async function AddBankPage({ params }: { params: Promise<{ id: string }> }) {
-  // Bắt buộc phải có dòng này để báo Next.js đây là trang động
-  await connection();
-  
-  const resolvedParams = await params;
-  
-  // Truyền ID sang cho form xử lý
-  return <AddBankForm adminId={resolvedParams.id} />;
+export default function AddBankPage({ params }: { params: Promise<{ id: string }> }) {
+  return (
+    <Suspense fallback={<div className="p-10 text-center text-black">Đang tải form...</div>}>
+      <AddBankPageContent params={params} />
+    </Suspense>
+  );
 }

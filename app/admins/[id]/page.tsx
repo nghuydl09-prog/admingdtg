@@ -1,10 +1,19 @@
 import { Suspense } from "react";
-import AddBankPageContent from "./AddBankPageContent";
+import AdminDetailContent from "./AdminDetailContent";
 
-export default function AddBankPage({ params }: { params: Promise<{ id: string }> }) {
+// Component hiển thị tạm trong lúc chờ dữ liệu
+function AdminDetailSkeleton() {
   return (
-    <Suspense fallback={<div className="p-10 text-center text-black">Đang tải form...</div>}>
-      <AddBankPageContent params={params} />
+    <div className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+      <div className="text-lg font-medium text-gray-600">Đang tải thông tin Admin...</div>
+    </div>
+  );
+}
+
+export default function AdminDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  return (
+    <Suspense fallback={<AdminDetailSkeleton />}>
+      <AdminDetailContent params={params} />
     </Suspense>
   );
 }
