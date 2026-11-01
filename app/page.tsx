@@ -6,7 +6,7 @@ export default function Home() {
       {/* 1. Thanh Menu (Header) */}
       <header className="bg-white shadow-sm py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="font-bold text-xl text-red-600">TOP GDTG.VN</div>
+          <div className="font-bold text-xl text-red-600">ADMIN GDTG</div>
           <nav className="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
             <Link href="/admins" className="hover:text-red-600">Danh sách admin</Link>
             <Link href="#" className="hover:text-red-600">Trung gian</Link>
@@ -49,13 +49,13 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 3. Banner Quảng Cáo (Lưới ảnh) */}
+                {/* 3. Banner Quảng Cáo (Lưới ảnh) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Tạm dùng ảnh placeholder, lát nữa bạn có thể thay bằng ảnh thật */}
-          <img src="https://picsum.photos/600/250?random=1" alt="Banner 1" className="rounded-lg w-full object-cover shadow-sm" />
-          <img src="https://picsum.photos/600/250?random=2" alt="Banner 2" className="rounded-lg w-full object-cover shadow-sm" />
-          <img src="https://picsum.photos/600/250?random=3" alt="Banner 3" className="rounded-lg w-full object-cover shadow-sm" />
-          <img src="https://picsum.photos/600/250?random=4" alt="Banner 4" className="rounded-lg w-full object-cover shadow-sm" />
+          {/* Thay tên file banner1.jpg bằng tên ảnh thật của bạn */}
+          <img src="/images/banner1.jpg" alt="Banner 1" className="rounded-lg w-full object-cover shadow-sm" />
+          <img src="/images/banner2.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow-sm" />
+          <img src="/images/banner3.jpg" alt="Banner 3" className="rounded-lg w-full object-cover shadow-sm" />
+          <img src="/images/banner4.jpg" alt="Banner 4" className="rounded-lg w-full object-cover shadow-sm" />
         </div>
       </main>
     </div>
