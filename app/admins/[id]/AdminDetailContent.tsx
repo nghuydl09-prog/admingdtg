@@ -1,34 +1,53 @@
 import { supabase } from "../../lib/supabase";
 
 export default async function AdminDetailContent({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params;
-  const adminId = resolvedParams.id;
+  let admin = null;
+  let banks = [];
+  let errorMsg = "";
 
-  // Lấy thông tin Admin
-  const { data: admin, error: adminError } = await supabase
-    .from("admins")
-    .select("*")
-    .eq("id", adminId)
-    .single();
+  try {
+    const resolvedParams = await params;
+    const adminId = resolvedParams.id;
 
-  // Xử lý lỗi an toàn
-  if (adminError || !admin) {
+    // Lấy thông tin Admin
+    const { data: adminData, error: adminError } = await supabase
+      .from("admins")
+      .select("*")
+      .eq("id", adminId)
+      .single();
+
+    // Nếu Supabase báo lỗi (VD: Không tìm thấy ID) thì ném lỗi ra ngoài
+    if (adminError || !adminData) {
+      throw new Error("Không tìm thấy Admin này trong hệ thống!");
+    }
+
+    admin = adminData;
+
+    // Lấy thông tin ngân hàng
+    const { data: bankData } = await supabase
+      .from("bank_accounts")
+      .select("*")
+      .eq("admin_id", adminId);
+      
+    banks = bankData || [];
+
+  } catch (error: any) {
+    // Nếu có BẤT KỲ LỖI NÀO xảy ra, gán thông báo lỗi để hiển thị
+    errorMsg = error.message || "Đã xảy ra lỗi khi tải dữ liệu.";
+  }
+
+  // NẾU CÓ LỖI -> HIỂN THỊ KHUNG THÔNG BÁO (Không bị văng web)
+  if (errorMsg || !admin) {
     return (
       <div className="p-10 flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center bg-white p-8 rounded-xl shadow-md border border-red-200 max-w-md w-full">
           <h2 className="text-2xl font-bold text-red-600 mb-2">Không tìm thấy dữ liệu!</h2>
-          <p className="text-gray-600 mb-6">Admin này không tồn tại hoặc đã bị xóa khỏi hệ thống.</p>
+          <p className="text-gray-600 mb-6">{errorMsg || "Admin này không tồn tại hoặc đã bị xóa."}</p>
           <a href="/admins" className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Quay lại danh sách</a>
         </div>
       </div>
     );
   }
-
-  // Lấy thông tin ngân hàng
-  const { data: banks } = await supabase
-    .from("bank_accounts")
-    .select("*")
-    .eq("admin_id", adminId);
 
   const hasZalo = admin.zalo_phone && admin.zalo_phone.trim() !== "";
 
@@ -134,7 +153,7 @@ export default async function AdminDetailContent({ params }: { params: Promise<{
                       </tr>
                     </thead>
                     <tbody>
-                      {banks.map((bank, index) => (
+                      {banks.map((bank: any, index: number) => (
                         <tr key={bank.id} className="bg-white hover:bg-gray-50">
                           <td className="px-4 py-3 border">{index + 1}</td>
                           <td className="px-4 py-3 border font-medium">{bank.bank_name}</td>
