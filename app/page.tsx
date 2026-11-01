@@ -19,21 +19,19 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Menu */}
+          {/* Menu MỚI THEO YÊU CẦU */}
           <nav className="hidden lg:flex space-x-8 text-sm font-bold text-gray-900">
-            <Link href="#" className="hover:text-red-600">Quỹ bảo hiểm</Link>
-            <Link href="#" className="hover:text-red-600">Trung gian</Link>
-            <Link href="#" className="hover:text-red-600">Scammer</Link>
-            <Link href="#" className="hover:text-red-600">Nội quy giao dịch</Link>
+            <Link href="/" className="hover:text-red-600">Trang chủ</Link>
+            <Link href="/admins" className="hover:text-red-600">Quỹ bảo hiểm</Link>
+            <Link href="/" className="hover:text-red-600">Trung gian</Link>
+            <Link href="/" className="hover:text-red-600">Scammer</Link>
+            <Link href="/" className="hover:text-red-600">Nội quy giao dịch</Link>
           </nav>
 
-          {/* Nút bấm bên phải */}
+          {/* Nút bấm bên phải (Đã xóa nút Tài khoản) */}
           <div className="flex items-center gap-3">
-            <Link href="#" className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-red-700 flex items-center gap-1">
+            <Link href="#" className="bg-red-600 text-white px-5 py-2 rounded-md text-sm font-bold hover:bg-red-700 flex items-center gap-1">
               <span>⚠</span> Tố cáo
-            </Link>
-            <Link href="/login" className="bg-gray-500 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-gray-600 flex items-center gap-1">
-              <span>👤</span> Tài khoản
             </Link>
           </div>
         </div>
@@ -69,7 +67,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Banner Quảng Cáo (Lưới ảnh) */}
+        {/* Banner Quảng Cáo */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <img src="/images/banner1.jpg" alt="Banner 1" className="rounded-lg w-full object-cover shadow-sm" />
           <img src="/images/banner2.jpg" alt="Banner 2" className="rounded-lg w-full object-cover shadow-sm" />

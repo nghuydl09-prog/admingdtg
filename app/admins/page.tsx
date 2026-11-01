@@ -72,21 +72,19 @@ export default function AdminsList() {
             </div>
           </Link>
 
-          {/* Menu */}
+          {/* Menu MỚI THEO YÊU CẦU */}
           <nav className="hidden lg:flex space-x-8 text-sm font-bold text-gray-900">
-            <Link href="#" className="hover:text-red-600">Quỹ bảo hiểm</Link>
-            <Link href="#" className="hover:text-red-600">Trung gian</Link>
-            <Link href="#" className="hover:text-red-600">Scammer</Link>
-            <Link href="#" className="hover:text-red-600">Nội quy giao dịch</Link>
+            <Link href="/" className="hover:text-red-600">Trang chủ</Link>
+            <Link href="/admins" className="text-red-600">Quỹ bảo hiểm</Link>
+            <Link href="/" className="hover:text-red-600">Trung gian</Link>
+            <Link href="/" className="hover:text-red-600">Scammer</Link>
+            <Link href="/" className="hover:text-red-600">Nội quy giao dịch</Link>
           </nav>
 
-          {/* Nút bấm bên phải */}
+          {/* Nút bấm bên phải (Đã xóa nút Tài khoản) */}
           <div className="flex items-center gap-3">
-            <Link href="#" className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-red-700 flex items-center gap-1">
+            <Link href="#" className="bg-red-600 text-white px-5 py-2 rounded-md text-sm font-bold hover:bg-red-700 flex items-center gap-1">
               <span>⚠</span> Tố cáo
-            </Link>
-            <Link href="/login" className="bg-gray-500 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-gray-600 flex items-center gap-1">
-              <span>👤</span> Tài khoản
             </Link>
           </div>
         </div>
@@ -110,7 +108,7 @@ export default function AdminsList() {
               className="flex-1 border border-gray-300 rounded-l-md p-3 outline-none text-black focus:border-red-500"
             />
             <button className="bg-red-600 text-white px-6 py-3 rounded-r-md font-medium hover:bg-red-700">
-              🔍 TRA CỨU
+               TRA CỨU
             </button>
           </div>
 
