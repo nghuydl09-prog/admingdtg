@@ -5,28 +5,64 @@ import { useRouter } from "next/navigation";
 
 export default function AddAdmin() {
   const [name, setName] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarFile, setAvatarFile] = useState<File | null>(null); // State chứa file ảnh
+  const [avatarPreview, setAvatarPreview] = useState(""); // State xem trước ảnh
   const [facebookUrl, setFacebookUrl] = useState("");
   const [zaloPhone, setZaloPhone] = useState("");
   const [bio, setBio] = useState("");
   const [depositAmount, setDepositAmount] = useState("");
-  const [isExecutive, setIsExecutive] = useState(false); // State cho Admin điều hành
+  const [isExecutive, setIsExecutive] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  // Hàm xử lý khi chọn ảnh
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(file)); // Hiển thị ảnh xem trước
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
+    let uploadedAvatarUrl = "";
+
+    // 1. Nếu có chọn ảnh thì tiến hành Upload lên Supabase Storage
+    if (avatarFile) {
+      const fileExt = avatarFile.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`; // Đặt tên file bằng thời gian để không bị trùng
+      
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(fileName, avatarFile);
+
+      if (uploadError) {
+        alert("Lỗi upload ảnh: " + uploadError.message);
+        setLoading(false);
+        return;
+      }
+
+      // Lấy link public của ảnh vừa upload
+      const { data: publicUrlData } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(fileName);
+      
+      uploadedAvatarUrl = publicUrlData.publicUrl;
+    }
+
+    // 2. Lưu thông tin Admin vào Database
     const { error } = await supabase.from("admins").insert([
       {
         name: name,
-        avatar_url: avatarUrl,
+        avatar_url: uploadedAvatarUrl, // Dùng link ảnh vừa upload
         facebook_url: facebookUrl,
         zalo_phone: zaloPhone,
         bio: bio,
         deposit_amount: Number(depositAmount) || 0,
-        is_executive: isExecutive, // Lưu trạng thái điều hành
+        is_executive: isExecutive,
       },
     ]);
 
@@ -43,14 +79,29 @@ export default function AddAdmin() {
     <div className="p-10 max-w-2xl mx-auto min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-black">Thêm Admin Mới</h1>
       <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
+        
         <div>
           <label className="block text-sm font-medium text-gray-700">Tên Admin</label>
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} required className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-black" />
         </div>
+
+        {/* KHU VỰC CHỌN VÀ XEM TRƯỚC ẢNH */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Link Ảnh đại diện (URL)</label>
-          <input type="text" value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-black" />
+          <label className="block text-sm font-medium text-gray-700 mb-2">Ảnh đại diện</label>
+          <div className="flex items-center gap-4">
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageChange} 
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+            {/* Hiển thị ảnh xem trước nếu đã chọn */}
+            {avatarPreview && (
+              <img src={avatarPreview} alt="Preview" className="w-16 h-16 object-cover rounded-full border" />
+            )}
+          </div>
         </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700">Link Facebook</label>
           <input type="text" value={facebookUrl} onChange={(e) => setFacebookUrl(e.target.value)} className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-black" />
@@ -68,7 +119,6 @@ export default function AddAdmin() {
           <input type="number" value={depositAmount} onChange={(e) => setDepositAmount(e.target.value)} className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-black" />
         </div>
         
-        {/* Nút tích chọn Admin Điều Hành */}
         <div className="flex items-center gap-2 bg-blue-50 p-3 rounded-md border border-blue-200">
           <input 
             type="checkbox" 
@@ -78,12 +128,12 @@ export default function AddAdmin() {
             className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
           />
           <label htmlFor="isExecutive" className="text-sm font-bold text-blue-800 cursor-pointer">
-            Đánh dấu là ADMIN ĐIỀU HÀNH (Sẽ hiển thị riêng ở trang chủ)
+            Đánh dấu là ADMIN ĐIỀU HÀNH
           </label>
         </div>
 
         <button type="submit" disabled={loading} className="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700 mt-4">
-          {loading ? "Đang lưu..." : "Lưu Admin"}
+          {loading ? "Đang xử lý..." : "Lưu Admin"}
         </button>
       </form>
     </div>
